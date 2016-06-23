@@ -15,5 +15,7 @@ public class Sea_battle {
     public static void main(String[] args) {
         Battle_field a = new Battle_field("Mark Smith");
         a.displayField();
+        a.generateField();
+        a.displayField();
     }
 }

@@ -1,7 +1,9 @@
 public class Ship extends Abstract_Ship {
 
+    public Ship() {
+    }
 
-    public Ship(int direction, int pipeNumber, int x, int y) {
+    public Ship(int direction, int pipeNumber, int x, int y) {//координата левой верхней точки
         this.direction = direction;
         this.pipeNumber = pipeNumber;
         this.x = x;
@@ -13,32 +15,21 @@ public class Ship extends Abstract_Ship {
     @Override//переопределение - заменяем реализацию метода из родительского класса реализацией в дочернем
     public boolean checkShoot() {
         return false;
-    }
+    }// check shooting the target ship
 
     @Override
-    public boolean putShip(int x, int y, int pipeNumber, int direction) {
+    public boolean putShip(int x, int y, int pipeNumber, int direction, int [][] field) {
 
        boolean result = false;
-
-        if (direction == 0 && this.direction == 1)// 0 horizontal; 1 vertical
-        {
-           if (((x + pipeNumber) < (this.x - 1)) || ((x + 1 ) > this.x ))
-             result = true;
-        }
-        else if (direction == 0 && this.direction == 0)
-        {
-            if (((x + pipeNumber) < (this.x - 1)) || ((x + 1 ) > this.x + this.pipeNumber ))
-                result = true;
-        }
-
-        else  if (direction == 1 && this.direction == 1)
-        {
-            if (((x + pipeNumber) < (this.x - 1)) || ((x + 1 ) > this.x ))
-                result = true;
-        }
-        else if (direction == 1 && this.direction == 0)
-        {
-            if (((x + pipeNumber) < (this.x - 1)) || ((x + 1 ) > this.x + this.pipeNumber ))
+        int i;
+        if (y + (direction == 1 ? pipeNumber : 0) > Math.sqrt(field.length) || (x + (direction == 0 ? pipeNumber : 0)) >  Math.sqrt(field.length))
+            result = false;
+        else {
+            for (i = 0; i < pipeNumber; i++) {
+                if (field[y + (direction == 1 ? i : 0)][x + (direction == 0 ? i : 0)] != 0)
+                    break;
+            }
+            if (i == pipeNumber)
                 result = true;
         }
         return result;
